@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>My First To-Do App</title>
+    </head>
+
+    <body>
+        <input id="todo-box" type="text" />
+        <input id="datepicker" type="date"; />
+        <button onclick="addTodo()">Add To-Do</button>
+        
+        <div id="workspace"></div>
+
+        <script>
+        
+        let todos = [];
+        
+  
+        function addTodo() {
+            const textbox = document.getElementById('todo-box');
+            const title = textbox.value;
+
+            const datePick = document.getElementById('datepicker')
+            const dueDate = datePick.value;
+            
+            const id = '' + new Date().getTime();
+            
+            todos.push({
+                title: title,
+                dueDate: dueDate,
+                id: id
+            });
+            
+            render();
+            
+        }
+
+
+        function deleteToDo(event) {
+            const deleteyButton = event.target;
+            const idToDelete = deleteyButton.id;
+         
+            todos = todos.filter(function (todo) {
+            
+            if (todo.id === idToDelete) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+
+        render();
+    }
+         
+
+        function render() {
+            document.getElementById('workspace').innerHTML = '';
+            
+         todos.forEach(function (todo) {
+            const element = document.createElement('div');
+            element.innerText = todo.title + ' ' + todo.dueDate;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.innerText = 'Delete';
+            deleteButton.style = 'margin-left: 12px;'
+            deleteButton.onclick = deleteToDo;
+            deleteButton.id = todo.id;
+            element.appendChild(deleteButton);
+            
+            const workarea = document.getElementById("workspace");
+            workarea.appendChild(element);
+            
+
+
+        });
+
+        }
+
+        </script>
+
+    </body>
+    </html>
